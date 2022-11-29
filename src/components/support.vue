@@ -8,7 +8,7 @@
                     <img :src="
                         rewardData.wechat_image
                             ? rewardData.wechat_image
-                            : 'static/img/Wechat.JPG'
+                            : 'static/img/wechat.jpg'
                     " :onerror="$store.state.errorImg" />
                 </div>
             </el-col>
@@ -17,13 +17,13 @@
                     <img :src="
                         rewardData.alipay_image
                             ? rewardData.alipay_image
-                            : 'static/img/Alipay.JPG'
+                            : 'static/img/alipay.jpg'
                     " :onerror="$store.state.errorImg" />
                 </div>
             </el-col>
         </el-row>
         <h1>@赞赏记录：</h1>
-        <el-table :data="tableData" border style="width: 100%">
+        <el-table :data="donaterData" border style="width: 100%">
             <el-table-column prop="date" label="日期" width="180">
             </el-table-column>
             <el-table-column prop="name" label="姓名" width="180">
@@ -31,6 +31,36 @@
             <el-table-column prop="money" label="金额">
             </el-table-column>
         </el-table>
+        <el-button type="info" plain @click="dialogVisible = true">添加打赏人</el-button>
+        <el-dialog :visible.sync="dialogVisible" width="30%">
+            <span>您给钱了吗</span>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">。。。</el-button>
+                <el-button type="primary" @click="addForm()">给了</el-button>
+            </span>
+        </el-dialog>
+
+        <el-dialog title="" :visible.sync="addFormVisible" width="30%">
+            <el-form ref="form" :model="form" label-width="80px">
+                <el-form-item label="打赏人">
+                    <el-input v-model="donater.name"></el-input>
+                </el-form-item>
+                <el-form-item label="打赏金额">
+                    <el-input v-model="donater.money"></el-input>
+                </el-form-item>
+                <el-form-item label="打赏时间">
+                    <el-col :span="11">
+                        <el-date-picker type="date" placeholder="选择日期" v-model="donater.date" style="width: 100%;">
+                        </el-date-picker>
+                    </el-col>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="onSubmit">添加</el-button>
+                    <el-button @click="addFormVisible=false">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+
     </div>
 </template>
 
@@ -42,21 +72,36 @@ export default {
     data() {
         return {
             rewardData: "",  //赞赏二维码
-            tableData: [],
-           
+
+            //所有打赏人的数据
+            donaterData: [],
+            dialogVisible: false,
+            addFormVisible: false,
+            //储存打赏人的数据
+            donater: {
+                name: '',
+                money: '',
+                date: ''
+            }
         }
     },
-
+    
     created() {
         axios.get("/Support").then(res => {
             console.log(res.data)
-            this.tableData=res.data.data;
+            this.donaterData=res.data.data;
         })
         
     },
 
     methods: {
-        
+        addForm(){
+            this.dialogVisible = false;
+            this.addFormVisible = true;
+        },
+        onSubmit() {
+        console.log('submit!');
+      },
     },
 };
 </script>

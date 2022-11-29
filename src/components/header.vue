@@ -27,20 +27,20 @@
 		activeIndex: '/',			//当前的路由模块
       };
     },
-    methods: {
-		//处理点击不同按钮的函数
-      handleSelect(key, keyPath) {
-        console.log(key, keyPath);
-		this.$router.push({
-			path: key
-		});
-      },
+  methods: {
+    //处理点击不同按钮的函数
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+      this.$router.push({
+        path: key
+      });
+    },
 
-	  routeChange: function() {
-		var that = this;
-		that.activeIndex = this.$route.path == '/' ? '/Home' : this.$route.path;
-	  }
+    routeChange: function () {
+      var that = this;
+      that.activeIndex = this.$route.path == '/' ? '/Home' : this.$route.path;
     }
+  }
   }
 </script>
 
