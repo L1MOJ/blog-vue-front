@@ -8,7 +8,7 @@
                     <img :src="
                         rewardData.wechat_image
                             ? rewardData.wechat_image
-                            : 'static/img/wechat.jpg'
+                            : 'static/img/Wechat.jpg'
                     " :onerror="$store.state.errorImg" />
                 </div>
             </el-col>
@@ -17,7 +17,7 @@
                     <img :src="
                         rewardData.alipay_image
                             ? rewardData.alipay_image
-                            : 'static/img/alipay.jpg'
+                            : 'static/img/Alipay.jpg'
                     " :onerror="$store.state.errorImg" />
                 </div>
             </el-col>
