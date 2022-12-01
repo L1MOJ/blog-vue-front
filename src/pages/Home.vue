@@ -4,12 +4,12 @@
         <lj-navbar></lj-navbar>
         main page
         <div class="container">
-            <el-row  :gutter="30">
+            <el-row :gutter="30">
                 <el-col :sm="24" :md="16" style="transition:all .5s ease-out;margin-bottom:30px;">
-                   
+                    <lj-articlelist></lj-articlelist>
                 </el-col>
-                <el-col :sm="24"  :md="8" >
-                    
+                <el-col :sm="24" :md="8">
+                    <lj-rightlist></lj-rightlist>
                 </el-col>
             </el-row>
         </div>
@@ -32,7 +32,8 @@ import rightlist from '../components/rightlist.vue'
         },
         components: { //定义组件
             'lj-navbar':header,
-            //'sg-articlelist':articlelist,
+            'lj-articlelist':articlelist,
+            'lj-rightlist':rightlist,
             //'sg-rightlist':rightlist,
         },
         created() { //生命周期函数

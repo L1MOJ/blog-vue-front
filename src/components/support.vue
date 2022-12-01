@@ -23,8 +23,8 @@
             </el-col>
         </el-row>
         <h1>@赞赏记录：</h1>
-        <el-table :data="donaterData" border style="width: 100%">
-            <el-table-column prop="date" label="日期" width="180">
+        <el-table :data="donatorData" border style="width: 100%">
+            <el-table-column prop="donateTime" label="日期" width="180">
             </el-table-column>
             <el-table-column prop="name" label="姓名" width="180">
             </el-table-column>
@@ -43,14 +43,14 @@
         <el-dialog title="" :visible.sync="addFormVisible" width="30%">
             <el-form ref="form" :model="form" label-width="80px">
                 <el-form-item label="打赏人">
-                    <el-input v-model="donater.name"></el-input>
+                    <el-input v-model="donator.name"></el-input>
                 </el-form-item>
                 <el-form-item label="打赏金额">
-                    <el-input v-model="donater.money"></el-input>
+                    <el-input v-model="donator.money"></el-input>
                 </el-form-item>
                 <el-form-item label="打赏时间">
                     <el-col :span="11">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="donater.date" style="width: 100%;">
+                        <el-date-picker type="date" placeholder="选择日期" v-model="donator.donateTime" style="width: 100%;">
                         </el-date-picker>
                     </el-col>
                 </el-form-item>
@@ -66,43 +66,61 @@
 
 <script>
 import axios from 'axios'
-import ref from 'vue'
+import {donatorList} from '../api/support'
 export default {
    
     data() {
         return {
             rewardData: "",  //赞赏二维码
-
+            queryParams: {
+                    pageNum: 1,
+                    pageSize: 4,
+                },
             //所有打赏人的数据
-            donaterData: [],
+            donatorData: [],
             dialogVisible: false,
             addFormVisible: false,
             //储存打赏人的数据
-            donater: {
+            donator: {
                 name: '',
                 money: '',
-                date: ''
+                donateTime: ''
             }
         }
     },
-    
-    created() {
-        axios.get("/Support").then(res => {
-            console.log(res.data)
-            this.donaterData=res.data.data;
-        })
-        
-    },
 
     methods: {
-        addForm(){
+        addForm() {
             this.dialogVisible = false;
             this.addFormVisible = true;
         },
         onSubmit() {
-        console.log('submit!');
-      },
+            console.log('submit!');
+        },
+        getDonators(){
+            console.log(this.queryParams)
+            donatorList(this.queryParams).then((response)=>{
+                console.log(response.rows)
+                this.donatorData = this.donatorData.concat(response.rows)
+                if(response.total<=this.donatorData.length){
+
+                    }else{
+                        this.queryParams.pageNum++
+                    }
+            })
+        }
     },
+    created() {
+        // axios.get("/Support").then(res => {
+        //     console.log(res.data)
+        //     this.donatorData=res.data.data;
+        // })
+        var that = this;
+        that.getDonators();
+        
+    },
+
+
 };
 </script>
 

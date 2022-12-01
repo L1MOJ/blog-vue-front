@@ -12,3 +12,15 @@ Mock.mock('/Support', {
     ]
   
 })
+
+Mock.mock('/article/mainArticles', {
+    "data|3":
+    [
+          {
+        "id|+1": 1,
+        "title": "@ctitle",
+        "createTime": "@datetime(yyyy-MM-dd)",
+    }
+    ]
+  
+})

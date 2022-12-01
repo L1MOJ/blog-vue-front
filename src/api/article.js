@@ -12,6 +12,28 @@ export function articleList(query) {
     })
 }
 
+// 查询精选文章
+export function staredArticles() {
+  return request({
+      url: '/article/staredArticles',
+      method: 'get',
+      headers: {
+        isToken: false
+      },
+  })
+}
+
+// 查询最新文章
+export function newArticles() {
+  return request({
+      url: '/article/newArticles',
+      method: 'get',
+      headers: {
+        isToken: false
+      },
+  })
+}
+
 //查询最热文章
 export function hotArticleList() {
     return request({
