@@ -11,6 +11,9 @@
             <h1>
                 {{item.title}}
             </h1>
+            
+                {{item.summary}}
+           
                 <!-- <h1>
                     <a :href="'#/DetailArticle?aid='+item.id" target="_blank">
                         {{item.title}}

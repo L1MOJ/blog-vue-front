@@ -31,6 +31,17 @@
             <el-table-column prop="money" label="金额">
             </el-table-column>
         </el-table>
+
+        <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="this.queryParams.pageNum"
+            :page-sizes="[5, 10, 15, 20]"
+            :page-size="this.queryParams.pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="this.dtotal">
+        </el-pagination>
+
         <el-button type="info" plain @click="dialogVisible = true">添加打赏人</el-button>
         <el-dialog :visible.sync="dialogVisible" width="30%">
             <span>您给钱了吗</span>
@@ -55,7 +66,7 @@
                     </el-col>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit">添加</el-button>
+                    <el-button type="primary" @click="addDonator">添加</el-button>
                     <el-button @click="addFormVisible=false">取消</el-button>
                 </el-form-item>
             </el-form>
@@ -72,9 +83,10 @@ export default {
     data() {
         return {
             rewardData: "",  //赞赏二维码
+            dtotal:0,
             queryParams: {
                     pageNum: 1,
-                    pageSize: 4,
+                    pageSize: 5,
                 },
             //所有打赏人的数据
             donatorData: [],
@@ -90,24 +102,32 @@ export default {
     },
 
     methods: {
+        //弹出添加打赏人的表单  后续考虑加不加感觉没啥用
         addForm() {
             this.dialogVisible = false;
             this.addFormVisible = true;
         },
-        onSubmit() {
+        addDonator() {
             console.log('submit!');
         },
         getDonators(){
             console.log(this.queryParams)
             donatorList(this.queryParams).then((response)=>{
                 console.log(response.rows)
-                this.donatorData = this.donatorData.concat(response.rows)
-                if(response.total<=this.donatorData.length){
-
-                    }else{
-                        this.queryParams.pageNum++
-                    }
+                this.dtotal=response.total;
+                this.donatorData = response.rows;
+                
             })
+        },
+        handleSizeChange(val) {
+            console.log(`每页 ${val} 条`);
+            this.queryParams.pageSize = val;
+            this.getDonators();
+        },
+        handleCurrentChange(val) {
+            console.log(`当前页: ${val}`);
+            this.queryParams.pageNum = val;
+            this.getDonators();
         }
     },
     created() {
