@@ -6,7 +6,7 @@
         <div class="container">
             <el-row :gutter="30">
                 <el-col :sm="24" :md="16" style="transition:all .5s ease-out;margin-bottom:30px;">
-                    <lj-articlelist></lj-articlelist>
+                    <lj-staredarticles></lj-staredarticles>
                 </el-col>
                 <el-col :sm="24" :md="8">
                     <lj-rightlist></lj-rightlist>
@@ -18,7 +18,7 @@
 
 <script>
 import header from '../components/header.vue'
-import articlelist from '../components/articlelist.vue'
+import staredarticles from '../components/staredarticles.vue'
 import rightlist from '../components/rightlist.vue'
     export default {
         name:'Home',
@@ -32,7 +32,7 @@ import rightlist from '../components/rightlist.vue'
         },
         components: { //定义组件
             'lj-navbar':header,
-            'lj-articlelist':articlelist,
+            'lj-staredarticles':staredarticles,
             'lj-rightlist':rightlist,
             //'sg-rightlist':rightlist,
         },

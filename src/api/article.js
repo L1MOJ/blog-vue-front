@@ -1,9 +1,9 @@
 ﻿import request from '@/utils/request'
 
-// 查询文章列表
-export function articleList(query) {
+// 查询所有文章列表
+export function allArticleList(query) {
     return request({
-        url: '/article/articleList',
+        url: '/article/allArticleList',
         method: 'get',
         headers: {
           isToken: false
@@ -34,16 +34,6 @@ export function newArticles() {
   })
 }
 
-//查询最热文章
-export function hotArticleList() {
-    return request({
-        url: '/article/hotArticleList',
-        headers: {
-          isToken: false
-        },
-        method: 'get'
-    })
-}
 
 //获取文章详情
 export function getArticle(articleId) {
@@ -54,15 +44,4 @@ export function getArticle(articleId) {
         },
         method: 'get'
     })
-}
-
-export function updateViewCount(articleId) {
-    return request({
-        url: '/article/updateViewCount/' + articleId,
-        headers: {
-          isToken: false
-        },
-        method: 'put'
-    })
-    
 }

@@ -18,7 +18,7 @@
         <!-- 去除原点 在后续style中设置 -->
         <a :href="'#/DetailArticle?aid' + item.id">{{item.title}}</a>
         ——{{item.createTime}}
-      </li>
+        </li>
       </ul>
    </section>
   </div>
