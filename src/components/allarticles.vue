@@ -1,9 +1,19 @@
 <template>
   <div class="">
+    <el-row>
+      <el-button
+        round
+        v-for="(item, index) in categoryList"
+        :key="index"
+        @click="handleCategory(item.categoryId)"
+      >
+        {{ item.categoryName }}
+      </el-button>
+    </el-row>
     <el-row class="allarticlesBox">
       <el-col
         :span="24"
-        class="s-item tcommonBox"
+        class="s-item tcommonBox floating-box"
         v-for="(item, index) in aList"
         :key="'article' + index"
       >
@@ -15,32 +25,28 @@
           <span class="day" v-html="showInitDate(item.createTime, 'date')"></span>
         </span>
         <header>
-          <h1>
+          <h1 style="text-align: center">
             <a :href="'#/DetailArticle?aid=' + item.id" target="_blank">
               {{ item.title }}
             </a>
           </h1>
-          <h2>
+          <h2 style="text-align: center">
             <i class="fa fa-fw fa-user"></i>发表于 <i class="fa fa-fw fa-clock-o"></i>
-            <span>{{ showInitDate(item.createTime, "newDate") }}</span> •
+            <span>{{ showInitDate(item.createTime, "newDate") }}</span>
             <!-- <i class="fa fa-fw fa-eye"></i>{{ item.viewCount }} 次围观 • -->
           </h2>
-          <!-- <div class="ui label">
-                        <a :href="'#/Share?classId=' + item.class_id">{{ item.categoryName }}</a>
-                    </div> -->
+          {{ item.categoryName }}
         </header>
         <div class="article-content">
-          <p style="text-indent: 2em">
+          <p style="text-indent: 2em; text-align: center">
             {{ item.summary }}
           </p>
           <p style="max-height: 300px; overflow: hidden; text-align: center">
             <img :src="item.thumbnail" alt="" class="maxW" />
           </p>
         </div>
-        <div class="viewdetail">
-          <a class="tcolors-bg" :href="'#/DetailArticle?aid=' + item.id" target="_blank">
-            阅读全文>>
-          </a>
+        <div class="viewdetail" style="text-align: center">
+          <a :href="'#/DetailArticle?aid=' + item.id"> 阅读全文>> </a>
         </div>
       </el-col>
     </el-row>
@@ -61,17 +67,22 @@
 <script>
 import { allArticleList } from "../api/article";
 import { initDate } from "../utils/server.js";
+import { getCategoryList } from "../api/article";
 export default {
   data() {
     return {
+      //查询到的文章总数
       total: 0,
+      //查询Id默认为-1，查询所有
       queryParams: {
         pageNum: 1,
         pageSize: 5,
         categoryId: -1,
       },
-      //所有打赏人的数据
+      //文章列表
       aList: [],
+      //将查询出的类名储存
+      categoryList: [],
     };
   },
 
@@ -79,14 +90,27 @@ export default {
     showInitDate: function (oldDate, full) {
       return initDate(oldDate, full);
     },
+
+    //得到所有文章
     getAllArticles() {
       console.log(this.queryParams);
       allArticleList(this.queryParams).then((response) => {
-        console.log(response.rows);
         this.total = response.total;
         this.aList = response.rows;
       });
     },
+    //得到所有文章类别
+    getCategoryList() {
+      getCategoryList().then((response) => {
+        this.categoryList = response;
+      });
+    },
+    //点击分类函数
+    handleCategory(id) {
+      this.queryParams.categoryId = id;
+      this.getAllArticles();
+    },
+    //处理分页
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.queryParams.pageSize = val;
@@ -98,53 +122,45 @@ export default {
       this.getAllArticles();
     },
   },
+
   created() {
-    var that = this;
-    that.getAllArticles();
+    this.getAllArticles();
+    this.getCategoryList();
   },
 };
 </script>
 <style>
-/*分享标题*/
-.shareTitle {
-  margin-bottom: 40px;
-  position: relative;
-  border-radius: 5px;
-  background: #fff;
-  padding: 15px;
-}
-.shareclassTwo {
-  width: 100%;
-}
-.shareclassTwo li {
-  display: inline-block;
-}
-.shareclassTwo li a {
-  display: inline-block;
-  padding: 3px 7px;
-  margin: 5px 10px;
-  color: #fff;
-  border-radius: 4px;
-  background: #64609e;
-  border: 1px solid #64609e;
-  transition: transform 0.2s linear;
-  -webkit-transition: transform 0.2s linear;
-}
-.shareclassTwo li a:hover {
-  transform: translate(0, -3px);
-  -webkit-transform: translate(0, -3px);
-}
-.shareclassTwo li a.active {
-  background: #fff;
+a {
   color: #64609e;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+a:hover {
+  color: #000;
+}
+.floating-box {
+  transition: all 0.2s linear;
+  position: relative;
+}
+.floating-box:hover {
+  transform: translate(0, -2px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 /*文章列表*/
 .allarticlesBox {
   transition: all 0.5s ease-out;
   font-size: 15px;
 }
-
-/*.allarticlesBox .viewmore a:hover,.s-item .viewdetail a:hover{
-        background: #48456C;
-    }*/
+.s-round-date {
+  background-color: #ccc;
+  width: 40px;
+  height: 40px;
+  border-radius: 35px;
+  display: inline-block;
+  text-align: center;
+}
+.s-round-date .month,
+.s-round-date .day {
+  color: #06c;
+  font-weight: bold;
+}
 </style>

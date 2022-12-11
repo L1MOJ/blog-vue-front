@@ -45,3 +45,15 @@ export function getArticle(articleId) {
         method: 'get'
     })
 }
+
+// 查询分类列表
+export function getCategoryList() {
+  return request({
+      url: '/article/getCategoryList',
+      headers: {
+        isToken: false
+      },
+      method: 'get'
+  })
+}
+

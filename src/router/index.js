@@ -52,12 +52,12 @@ export default new Router({
 			name: 'AboutMe'
 		},
 		{
-			path: '/Write',
-			component: resolve => require(['../pages/Write.vue'], resolve),
+			path: '/Edit',
+			component: resolve => require(['../pages/Edit.vue'], resolve),
 			meta: {
 
 			},
-			name: 'Write'
+			name: 'Edit'
 		},
 		{
 			path: '/My',
@@ -66,6 +66,14 @@ export default new Router({
 
 			},
 			name: 'My'
+		},
+		{
+			path: '/DetailArticle',
+			component: resolve => require(['../pages/DetailArticle.vue'], resolve),
+			meta: {
+
+			},
+			name: 'DetailArticle'
 		},
 
 	]

@@ -10,7 +10,6 @@
           :md="16"
           style="transition: all 0.5s ease-out; margin-bottom: 30px"
         >
-          articles
           <lj-allarticlelist></lj-allarticlelist>
         </el-col>
         <el-col :sm="24" :md="8">
