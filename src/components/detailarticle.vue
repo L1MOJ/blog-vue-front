@@ -54,6 +54,13 @@ export default {
 .article-detail {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  margin-left: 620px;
+}
+
+.article-detail .el-card {
+  width: 800px;
+  margin-bottom: 20px;
 }
 
 .article-header {

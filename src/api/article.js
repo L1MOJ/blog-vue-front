@@ -56,4 +56,48 @@ export function getCategoryList() {
       method: 'get'
   })
 }
+//逻辑删除文章
+export function delArticles(checkedArticles) {
+  return request({
+      url: '/article/delArticles',
+      method: 'post',
+      headers: {
+          isToken: false
+        },
+      data: checkedArticles
+  })
+}
+//精选文章
+export function starArticles(checkedArticles) {
+  return request({
+      url: '/article/starArticles',
+      method: 'post',
+      headers: {
+          isToken: false
+        },
+      data: checkedArticles
+  })
+}
+//提交编辑
+export function editArticle(article) {
+  return request({
+      url: '/article/edit',
+      method: 'post',
+      headers: {
+          isToken: false
+        },
+      data: article
+  })
+}
 
+//新增文章
+export function addArticle(article) {
+  return request({
+      url: '/article/add',
+      method: 'post',
+      headers: {
+          isToken: false
+        },
+      data: article
+  })
+}

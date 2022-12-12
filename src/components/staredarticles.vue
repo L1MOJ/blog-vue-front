@@ -1,26 +1,35 @@
 <!-- 文章列表 -->
 <template>
-  <el-row class="staredlistBox">
-    <el-col
-      :span="24"
-      class="s-item tcommonBox floating-box"
-      v-for="(item, index) in articleList"
-      :key="'article' + index"
-    >
-      <header style="text-align: center">
-        <h1>
-          <a :href="'#/DetailArticle?aid=' + item.id" target="_blank">{{ item.title }}</a>
-        </h1>
-        {{ item.summary }}
-      </header>
-      <h5>
-        <i class="fa fa-fw fa-clock-o"></i>发表于<span>{{
-          showInitDate(item.createTime, "newDate")
-        }}</span>
-      </h5>
-    </el-col>
-    <el-col class="viewmore"> </el-col>
-  </el-row>
+  <div class="starlist">
+    <el-row>
+      <el-col
+        :span="24"
+        class="floating-box staredlistBox"
+        v-for="(item, index) in articleList"
+        :key="'article' + index"
+        style="margin: 20px"
+      >
+        <header style="text-align: center">
+          <h1>
+            <a :href="'#/DetailArticle?aid=' + item.id" target="_blank">{{
+              item.title
+            }}</a>
+          </h1>
+          {{ item.summary }}
+        </header>
+        <h5>
+          <i class="fa fa-fw fa-clock-o"></i>发表于<span>{{
+            showInitDate(item.createTime, "newDate")
+          }}</span>
+        </h5>
+        <div class="viewdetail">
+          <a class="tcolors-bg" :href="'#/DetailArticle?aid=' + item.id" target="_blank">
+            阅读全文>>
+          </a>
+        </div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 <script>
 import { initDate } from "../utils/server.js";
@@ -53,12 +62,18 @@ export default {
   created() {
     var that = this;
     that.getList();
-    //     axios.get("/article/staredArticles").then(res => {
-    //     this.articleList=res.data.data;
-
-    // })
   },
 };
 </script>
 
-<style></style>
+<style>
+.starlist {
+  width: 800px;
+  margin-left: 400px;
+}
+.staredlistBox {
+  background-color: #f3f3e4;
+  text-align: center;
+  border-radius: 10px;
+}
+</style>

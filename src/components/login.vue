@@ -63,10 +63,7 @@ export default {
       userLogin(this.userForm.username, this.userForm.password)
         .then((response) => {
           console.log(this.userForm.username);
-          console.log(response);
-          if (response != null) {
-            console.log("Success");
-          }
+          this.loginVisible = false;
         })
         .catch((error) => {
           console.log(error);

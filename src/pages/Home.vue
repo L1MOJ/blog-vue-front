@@ -2,7 +2,6 @@
 <template>
   <div>
     <lj-navbar></lj-navbar>
-    main page
     <div class="container">
       <el-row :gutter="30">
         <el-col

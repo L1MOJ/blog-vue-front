@@ -1,31 +1,36 @@
 <template>
   <div class="tRewardBox">
     <h1>扫一扫请我喝奶茶</h1>
-    <el-row :gutter="30">
-      <el-col :span="12" class="donate-item">
-        <div class="donate-tip">
-          <img
-            :src="
-              rewardData.wechat_image ? rewardData.wechat_image : 'static/img/Wechat.jpg'
-            "
-            :onerror="$store.state.errorImg"
-          />
-        </div>
-      </el-col>
-      <el-col :span="12" class="donate-item">
-        <div class="donate-tip">
-          <img
-            :src="
-              rewardData.alipay_image ? rewardData.alipay_image : 'static/img/Alipay.jpg'
-            "
-            :onerror="$store.state.errorImg"
-          />
-        </div>
-      </el-col>
-    </el-row>
+    <div class="pics">
+      <el-row :gutter="30">
+        <el-col :span="12" class="donate-item">
+          <div class="donate-tip">
+            <img
+              :src="
+                rewardData.wechat_image
+                  ? rewardData.wechat_image
+                  : '../../static/img/Wechat.JPG'
+              "
+              :onerror="$store.state.errorImg"
+            />
+          </div>
+        </el-col>
+        <el-col :span="12" class="donate-item">
+          <div class="donate-tip">
+            <img
+              :src="
+                rewardData.alipay_image
+                  ? rewardData.alipay_image
+                  : '../../static/img/Alipay.JPG'
+              "
+              :onerror="$store.state.errorImg"
+            />
+          </div>
+        </el-col>
+      </el-row>
+    </div>
     <h1>@赞赏记录：</h1>
-    <el-table :data="donatorData" border style="width: 100%">
-      <el-table-column prop="donateTime" label="日期" width="180"> </el-table-column>
+    <el-table :data="donatorData" border style="width: 60%">
       <el-table-column prop="name" label="姓名" width="180"> </el-table-column>
       <el-table-column prop="money" label="金额"> </el-table-column>
     </el-table>
@@ -41,14 +46,14 @@
     >
     </el-pagination>
 
-    <el-button type="info" plain @click="dialogVisible = true">添加打赏人</el-button>
+    <!-- <el-button type="info" plain @click="dialogVisible = true">添加打赏人</el-button>
     <el-dialog :visible.sync="dialogVisible" width="30%">
       <span>您给钱了吗</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">。。。</el-button>
         <el-button type="primary" @click="addForm()">给了</el-button>
       </span>
-    </el-dialog>
+    </el-dialog> -->
 
     <el-dialog title="" :visible.sync="addFormVisible" width="30%">
       <el-form label-width="80px">
@@ -79,7 +84,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { donatorList } from "../api/support";
 export default {
   data() {
@@ -115,7 +119,6 @@ export default {
     getDonators() {
       console.log(this.queryParams);
       donatorList(this.queryParams).then((response) => {
-        console.log(response.rows);
         this.dtotal = response.total;
         this.donatorData = response.rows;
       });
@@ -144,10 +147,10 @@ export default {
 
 <style>
 .tRewardBox .donate-item {
-  text-align: right;
+  text-align: center;
 }
 .tRewardBox .donate-item:last-child {
-  text-align: left;
+  text-align: center;
 }
 .tRewardBox .donate-item img {
   width: 100%;
@@ -160,5 +163,13 @@ export default {
   padding: 0 6px;
   text-align: center;
   box-sizing: border-box;
+}
+.el-table {
+  color: #263159;
+}
+.el-pager li.active {
+  color: #fffbeb !important; /*仅设置active时的文字颜色*/
+  background-color: #495579;
+  border-color: #fffbeb;
 }
 </style>

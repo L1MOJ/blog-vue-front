@@ -7,7 +7,7 @@
         <li v-for="item in newArticleList" :key="item.id">
           <!-- 去除原点 在后续style中设置 -->
           <a :href="'#/DetailArticle?aid=' + item.id">{{ item.title }}</a>
-          ——{{ item.createTime }}
+          —{{ showInitDate(item.createTime, "newDate") }}
         </li>
       </ul>
     </section>
@@ -17,7 +17,7 @@
         <li v-for="item in staredArticleList" :key="item.id">
           <!-- 去除原点 在后续style中设置 -->
           <a :href="'#/DetailArticle?aid' + item.id">{{ item.title }}</a>
-          ——{{ item.createTime }}
+          —{{ showInitDate(item.createTime, "newDate") }}
         </li>
       </ul>
     </section>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { initDate } from "../utils/server.js";
 import { newArticles, staredArticles } from "../api/article";
 export default {
   data() {
@@ -34,6 +35,10 @@ export default {
     };
   },
   methods: {
+    showInitDate: function (oldDate, full) {
+      return initDate(oldDate, full);
+    },
+
     getList() {
       newArticles().then((response) => {
         this.newArticleList = response;
@@ -57,15 +62,19 @@ export default {
 
 <style>
 /* 右边栏的样式 */
-.rightlistBox {
-  position: relative;
+a {
+  color: #263159;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-decoration: none;
 }
-
+a:hover {
+  color: #000;
+}
 /* 悬浮效果 */
 .rightlistBox section {
   transition: all 0.2s linear;
   position: relative;
-  background: #fff;
+  background: #f3f3e4;
   padding: 15px;
   margin-bottom: 20px;
   border-radius: 5px;
@@ -73,5 +82,9 @@ export default {
 .rightlistBox section:hover {
   transform: translate(0, -2px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+.rightlistBox {
+  margin-left: 150px;
+  width: 350px;
 }
 </style>
