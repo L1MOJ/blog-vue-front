@@ -19,7 +19,6 @@
 
 <script>
 import header from "../components/header.vue";
-import rightlist from "../components/rightlist.vue";
 import detailarticle from "../components/detailarticle.vue";
 
 export default {

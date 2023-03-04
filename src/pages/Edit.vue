@@ -11,9 +11,6 @@
         >
           <lj-edit></lj-edit>
         </el-col>
-        <el-col :sm="24" :md="8">
-          <lj-rightlist></lj-rightlist>
-        </el-col>
       </el-row>
     </div>
   </div>

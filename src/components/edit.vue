@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="Box">
+    <div class="eBox">
       <el-row>
         <div class="top-row">
           <el-button class="el-icon-plus" circle @click="add()"></el-button>
@@ -26,13 +26,7 @@
           <el-button class="el-icon-edit" @click="editArticle(article)"
             >编辑文章</el-button
           >
-          <el-button class="el-icon-share" circle @click="generateDownloadLink(article)"
-            >下载并分享</el-button
-          >
         </div>
-        <a v-if="downloadLink" :href="downloadLink" download @click="removeLink"
-          >点击这里下载文章</a
-        >
       </el-checkbox-group>
     </div>
     <el-pagination
@@ -46,6 +40,7 @@
       class="page"
     >
     </el-pagination>
+
     <!-- 新增文章 -->
     <el-dialog
       title="新增文章"
@@ -68,7 +63,11 @@
             <el-col :span="10"
               ><el-input v-model="aCategory" placeholder="新增类名"></el-input
             ></el-col>
-            <el-col :span="5"> <el-button @click="addCategory()">增加</el-button></el-col>
+            <el-col :span="5">
+              <el-button @click="addCategory()" :disabled="isAddDisabled"
+                >增加</el-button
+              ></el-col
+            >
           </el-row>
 
           <el-select v-model="aArticle.categoryId" placeholder="请选择文章分类">
@@ -96,7 +95,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button @click="submitAdd()">增加</el-button>
+          <el-button @click="submitAdd()" :disabled="aSubmitDisabled">增加</el-button>
           <el-button @click="cancelaForm()">取消</el-button>
         </el-form-item>
       </el-form>
@@ -123,7 +122,11 @@
             <el-col :span="10"
               ><el-input v-model="aCategory" placeholder="新增类名"></el-input
             ></el-col>
-            <el-col :span="5"> <el-button @click="addCategory()">增加</el-button></el-col>
+            <el-col :span="5">
+              <el-button @click="addCategory()" :disabled="isAddDisabled"
+                >增加</el-button
+              ></el-col
+            >
           </el-row>
 
           <el-select v-model="eArticle.categoryId" placeholder="请选择文章分类">
@@ -151,7 +154,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button @click="submitEdit()">修改</el-button>
+          <el-button @click="submitEdit()" :disabled="eSubmitDisabled">修改</el-button>
           <el-button @click="canceleForm()">取消</el-button>
         </el-form-item>
       </el-form>
@@ -199,31 +202,29 @@ export default {
       //表单显示
       editVisible: false,
       addVisible: false,
+
       //需要编辑的文章
       eArticle: {},
       //增加的文章
       aArticle: {},
-      downloadLink: "",
     };
   },
+  computed: {
+    isAddDisabled() {
+      return !this.aCategory;
+    },
+    eSubmitDisabled() {
+      return (
+        !this.eArticle.title && !this.eArticle.createTime && !this.eArticle.categoryId
+      );
+    },
+    aSubmitDisabled() {
+      return (
+        !this.aArticle.title && !this.aArticle.createTime && !this.aArticle.categoryId
+      );
+    },
+  },
   methods: {
-    removeLink(event) {
-      event.target.remove();
-    },
-    generateDownloadLink(article) {
-      const string =
-        article.id +
-        article.title +
-        "\n" +
-        "概述：" +
-        article.summary +
-        "\n" +
-        "正文：" +
-        article.content;
-      console.log(string);
-      const blob = new Blob([string], { type: "text/plain" });
-      this.downloadLink = URL.createObjectURL(blob);
-    },
     cancelaForm() {
       this.aArticle = {};
       this.addVisible = false;
@@ -267,6 +268,7 @@ export default {
       //刷新页面
       this.editVisible = false;
       this.getAllArticles();
+      alert("修改成功");
       this.getCategory();
     },
     //按钮提交新增文章
@@ -277,6 +279,7 @@ export default {
       });
       this.addVisible = false;
       this.getAllArticles();
+      alert("添加成功");
       this.getCategory();
     },
     //增加
@@ -299,8 +302,8 @@ export default {
         delArticles(this.checkedArticles).then((response) => {
           console.log("删除成功");
         });
-        this.getAllArticles();
       }
+      this.getAllArticles();
     },
     //得到所有文章
     getAllArticles() {
@@ -332,10 +335,11 @@ export default {
   },
 };
 </script>
+
 <style>
-.Box {
+.eBox {
   width: 800px;
-  margin-left: 700px;
+  margin-left: 800px;
   font-size: 50px;
 }
 .el-input {
@@ -348,9 +352,10 @@ export default {
   border-color: #fffbeb;
 }
 .page {
-  left: 50%;
+  /* left: 60%; */
+  /* transform: translate(60%, 0); */
   bottom: 0;
-  transform: translate(50%, 0);
+  margin-left: 250px;
 }
 .el-button {
   background-color: #fffbeb;

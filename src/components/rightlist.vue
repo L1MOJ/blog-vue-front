@@ -16,7 +16,7 @@
       <ul>
         <li v-for="item in staredArticleList" :key="item.id">
           <!-- 去除原点 在后续style中设置 -->
-          <a :href="'#/DetailArticle?aid' + item.id">{{ item.title }}</a>
+          <a :href="'#/DetailArticle?aid=' + item.id">{{ item.title }}</a>
           —{{ showInitDate(item.createTime, "newDate") }}
         </li>
       </ul>

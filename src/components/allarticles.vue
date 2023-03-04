@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <div class="Box">
       <el-row class="allarticlesBox">
         <el-col class="categoryList">

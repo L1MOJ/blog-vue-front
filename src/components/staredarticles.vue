@@ -23,9 +23,7 @@
           }}</span>
         </h5>
         <div class="viewdetail">
-          <a class="tcolors-bg" :href="'#/DetailArticle?aid=' + item.id" target="_blank">
-            阅读全文>>
-          </a>
+          <a :href="'#/DetailArticle?aid=' + item.id" target="_blank"> 阅读全文>> </a>
         </div>
       </el-col>
     </el-row>
